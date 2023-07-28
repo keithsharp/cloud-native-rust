@@ -14,6 +14,19 @@ To run:
 docker run -ti --rm keithsharp/basic-container 
 ```
 
+## [Basic Container Alpine](https://github.com/keithsharp/cloud-native-rust/tree/main/basic-container-alpine)
+Simple multi-stage build to create a smaller (12Mb) container with a "Hello, World" application.  Uses Alpine 3.18 for both building and running.
+
+To build:
+```bash
+cd basic-container
+docker build --rm -t keithsharp/basic-container .
+```
+To run:
+```bash
+docker run -ti --rm keithsharp/basic-container 
+```
+
 # Copyright and License
 Copyright 2023, Keith Sharp, kms@passback.co.uk.
 
