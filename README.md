@@ -1,6 +1,19 @@
 # Cloud Native Rust Experiments
 Small experiments in writing Rust programs that work in a "Cloud Native" way, mainly containers, Kubernetes, Docker, and serverless (AWS Lambda).
 
+## [Basic Container](https://github.com/keithsharp/cloud-native-rust/tree/master/basic-container)
+Simple multi-stage build to create a small (79Mb!) container with a "Hello, World" application.  Uses Debian Bookworm slim for both building and running.
+
+To build:
+```bash
+cd basic-container
+docker build --rm -t keithsharp/basic-container .
+```
+To run:
+```bash
+docker run -ti --rm keithsharp/basic-container 
+```
+
 # Copyright and License
 Copyright 2023, Keith Sharp, kms@passback.co.uk.
 
