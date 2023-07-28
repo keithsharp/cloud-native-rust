@@ -40,8 +40,8 @@ To run:
 docker run -ti --rm keithsharp/basic-container-scratch
 ```
 
-## [Workspace Multiple Containers](https://github.com/keithsharp/cloud-native-rust/tree/main/basic-container-scratch)
-A cargo workspace containing two binary crates ([`one`](https://github.com/keithsharp/cloud-native-rust/tree/main/basic-container-scratch/one) and [`two`](https://github.com/keithsharp/cloud-native-rust/tree/main/basic-container-scratch/two)).  The [Dockerfile](https://github.com/keithsharp/cloud-native-rust/tree/main/basic-container-scratch/Dockerfile) builds both crates as static binaries with each binary being copied into a separate from Scratch container.  The code is based on this [Stack Overflow answer](https://stackoverflow.com/questions/73871430/create-docker-image-from-rust-workspace).
+## [Workspace Multiple Containers](https://github.com/keithsharp/cloud-native-rust/tree/main/workspace-multiple-containers)
+A cargo workspace containing two binary crates ([`one`](https://github.com/keithsharp/cloud-native-rust/tree/main/workspace-multiple-containers/one) and [`two`](https://github.com/keithsharp/cloud-native-rust/tree/main/workspace-multiple-containers/two)).  The [Dockerfile](https://github.com/keithsharp/cloud-native-rust/tree/main/workspace-multiple-containers/Dockerfile) builds both crates as static binaries with each binary being copied into a separate from Scratch container.  The code is based on this [Stack Overflow answer](https://stackoverflow.com/questions/73871430/create-docker-image-from-rust-workspace).
 
 To build:
 ```bash
@@ -49,7 +49,7 @@ cd workspace-multiple-containers
 docker build --rm --target one .
 docker build --rm --target two .
 ```
-If you do a `docker image ls` you'll see that you have two new containers that are untagged.  What we now need to do is tag the containers by filtering on the labels we assigned in the [Dockerfile](https://github.com/keithsharp/cloud-native-rust/tree/main/basic-container-scratch/Dockerfile):
+If you do a `docker image ls` you'll see that you have two new containers that are untagged.  What we now need to do is tag the containers by filtering on the labels we assigned in the [Dockerfile](https://github.com/keithsharp/cloud-native-rust/tree/main/workspace-multiple-containers/Dockerfile):
 ```bash
 docker tag $(docker image ls -q --filter=dangling=true --filter=label=service=one) keithsharp/workspace-one
 docker tag $(docker image ls -q --filter=dangling=true --filter=label=service=two) keithsharp/workspace-two
