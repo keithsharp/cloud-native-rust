@@ -19,12 +19,25 @@ Simple multi-stage build to create a smaller (12Mb) container with a "Hello, Wor
 
 To build:
 ```bash
-cd basic-container
-docker build --rm -t keithsharp/basic-container .
+cd basic-container-alpine
+docker build --rm -t keithsharp/basic-container-alpine .
 ```
 To run:
 ```bash
-docker run -ti --rm keithsharp/basic-container 
+docker run -ti --rm keithsharp/basic-container-alpine 
+```
+
+## [Basic Container Scratch](https://github.com/keithsharp/cloud-native-rust/tree/main/basic-container-scratch)
+Simple multi-stage build to create a tiny (4.5Mb) container with a "Hello, World" application.  Uses Alpine 3.18 for both building and Scratch for running.
+
+To build:
+```bash
+cd basic-container-scratch
+docker build --rm -t keithsharp/basic-container-scratch .
+```
+To run:
+```bash
+docker run -ti --rm keithsharp/basic-container-scratch
 ```
 
 # Copyright and License
