@@ -34,7 +34,7 @@ docker run -ti --rm keithsharp/basic-container-alpine
 ```
 
 ## [Basic Container Scratch](https://github.com/keithsharp/cloud-native-rust/tree/main/basic-container-scratch)
-Simple multi-stage build to create a tiny (4.5Mb) container with a "Hello, World" application.  Uses Alpine 3.18 for both building and Scratch for running.
+Simple multi-stage build to create a tiny (4.5Mb) container with a "Hello, World" application.  Uses Alpine 3.18 for building and Scratch for running.
 
 To build:
 ```bash
@@ -92,7 +92,7 @@ docker run -ti --rm keithsharp/workspace-one
 docker run -ti --rm keithsharp/workspace-two
 ```
 > **Note**
-> Each of the tasks has `workspace = false` set so that the tasks only run at the workspace level and note for each member.  This is necessary because you might be defining things like dependencies in the workspace `Cargo.toml` which are referenced from the member `Cargo.toml`, so build at the member level without the workspace will fail.  See the [documentation](https://github.com/sagiegurari/cargo-make#usage-workspace-support) for more details.
+> Each of the tasks has `workspace = false` set so that the tasks only run at the workspace level and not for each member.  This is necessary because you might be defining things like dependencies in the workspace `Cargo.toml` which are referenced from the member `Cargo.toml`, so build at the member level without the workspace will fail.  See the [documentation](https://github.com/sagiegurari/cargo-make#usage-workspace-support) for more details.
 
 # Copyright and License
 Copyright 2023, Keith Sharp, kms@passback.co.uk.
