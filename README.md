@@ -61,6 +61,33 @@ docker run -ti --rm keithsharp/workspace-one
 docker run -ti --rm keithsharp/workspace-two
 ```
 
+## [Workspace Cargo Make](https://github.com/keithsharp/cloud-native-rust/tree/main/workspace-cargo-make)
+Builds on the [Workspace Multiple Containers](https://github.com/keithsharp/cloud-native-rust/tree/main/workspace-multiple-containers) example to use [Cargo Make](https://sagiegurari.github.io/cargo-make/) to automate the building and tagging of the containers.
+
+To install Cargo Make:
+```bash
+cargo install --force cargo-make
+```
+To build and tag a single container:
+```bash
+cargo make build-one
+```
+Because I've configured `[tasks.default]` alias, you can build and tag both containers:
+```bash
+cargo make 
+```
+Or, more explicitly relying on the `[tasks.build]` alias:
+```bash
+cargo make build
+```
+Run the containers as previously (or you could add another task):
+```bash
+docker run -ti --rm keithsharp/workspace-one
+docker run -ti --rm keithsharp/workspace-two
+```
+> **Note**
+> Each of the tasks has `workspace = false` set so that the tasks only run at the workspace level and note for each member.  This is necessary because you might be defining things like dependencies in the workspace `Cargo.toml` which are referenced from the member `Cargo.toml`, so build at the member level without the workspace will fail.  See the [documentation](https://github.com/sagiegurari/cargo-make#usage-workspace-support) for more details.
+
 # Copyright and License
 Copyright 2023, Keith Sharp, kms@passback.co.uk.
 
