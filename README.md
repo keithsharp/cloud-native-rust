@@ -1,6 +1,12 @@
 # Cloud Native Rust Experiments
 Small experiments in writing Rust programs that work in a "Cloud Native" way, mainly containers, Kubernetes, Docker, and serverless (AWS Lambda).
 
++ [Basic Container](https://github.com/keithsharp/cloud-native-rust#basic-container)
++ [Basic Container Alpine](https://github.com/keithsharp/cloud-native-rust#basic-container-alpine)
++ [Basic Container Scratch](https://github.com/keithsharp/cloud-native-rust#basic-container-scratch)
++ [Workspace Multiple Containers](https://github.com/keithsharp/cloud-native-rust#workspace-multiple-containers)
++ [Workspace Cargo Make](https://github.com/keithsharp/cloud-native-rust#workspace-cargo-make)
+
 ## [Basic Container](https://github.com/keithsharp/cloud-native-rust/tree/main/basic-container)
 Simple multi-stage build to create a small (79Mb!) container with a "Hello, World" application.  Uses Debian Bookworm slim for both building and running.
 
