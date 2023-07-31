@@ -1,0 +1,41 @@
+# Configures the default task to run
+[tasks.default]
+alias = "build-containers"
+
+# Overrides the default build task
+[tasks.build]
+alias = "build-containers"
+
+[tasks.build-one]
+workspace = false
+script = '''
+docker build --rm --target chef-one .
+docker tag $(docker image ls -q --filter=label=service=chef-one) keithsharp/chef-one
+'''
+
+[tasks.build-two]
+workspace = false
+script = """
+docker build --rm --target chef-two .
+docker tag $(docker image ls -q --filter=label=service=chef-two) keithsharp/chef-two
+"""
+
+[tasks.build-containers]
+workspace = false
+dependencies = [
+    "build-one",
+    "build-two"
+]
+
+[tasks.push-containers]
+workspace = false
+script = '''
+echo "Implementing docker push is left as an exercise for the reader."
+'''
+
+[tasks.delete-containers]
+workspace = false
+script = '''
+docker image rm $(docker image ls -q --filter=label=service=chef-one)
+docker image rm $(docker image ls -q --filter=label=service=chef-two)
+'''

@@ -1,0 +1,9 @@
+[package]
+name = "one"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow.workspace = true
+axum = "0.6.19"
+tokio.workspace = true

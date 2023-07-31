@@ -94,6 +94,23 @@ docker run -ti --rm keithsharp/workspace-two
 > **Note**
 > Each of the tasks has `workspace = false` set so that the tasks only run at the workspace level and not for each member.  This is necessary because you might be defining things like dependencies in the workspace `Cargo.toml` which are referenced from the member `Cargo.toml`, so build at the member level without the workspace will fail.  See the [documentation](https://github.com/sagiegurari/cargo-make#usage-workspace-support) for more details.
 
+## [Workspace Cargo Chef](https://github.com/keithsharp/cloud-native-rust/tree/main/workspace-cargo-chef)
+Builds on the [Workspace Cargo Make](https://github.com/keithsharp/cloud-native-rust/tree/main/workspace-cargo-make) example to use [Cargo Chef]() to create a cached layer of the compiled version of all of the projects dependencies, speeding up repeated builds.
+
+The magic is in the  invocations of `cargo chef planner ...` and `cargo chef cook ...` in the [Dockerfile](https://github.com/keithsharp/cloud-native-rust/tree/main/workspace-cargo-chef/Dockerfile).
+
+Building is exactly the same:
+```bash
+cargo make build
+```
+To run the containers:
+```bash
+docker run -ti --rm keithsharp/chef-one
+docker run -ti --rm keithsharp/chef-two
+```
+> **Note**
+> I've switched back to using `rust:slim-bookworm` to build and `debian:bookworm-slim`, this is to avoid having to complicate the [`Dockerfile`](https://github.com/keithsharp/cloud-native-rust/tree/main/workspace-cargo-chef/Dockerfile) with building and linking a static versions of OpenSSL which is a requirement of [Tokio](https://tokio.rs/).
+
 # Copyright and License
 Copyright 2023, Keith Sharp, kms@passback.co.uk.
 
