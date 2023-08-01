@@ -6,6 +6,8 @@ Small experiments in writing Rust programs that work in a "Cloud Native" way, ma
 + [Basic Container Scratch](https://github.com/keithsharp/cloud-native-rust#basic-container-scratch)
 + [Workspace Multiple Containers](https://github.com/keithsharp/cloud-native-rust#workspace-multiple-containers)
 + [Workspace Cargo Make](https://github.com/keithsharp/cloud-native-rust#workspace-cargo-make)
++ [Workspace Cargo Chef](https://github.com/keithsharp/cloud-native-rust#workspace-cargo-chef)
++ [Cargo Chef Scratch](https://github.com/keithsharp/cloud-native-rust#cargo-chef-scratch)
 
 ## [Basic Container](https://github.com/keithsharp/cloud-native-rust/tree/main/basic-container)
 Simple multi-stage build to create a small (79Mb!) container with a "Hello, World" application.  Uses Debian Bookworm slim for both building and running.
@@ -109,8 +111,28 @@ docker run -ti --rm keithsharp/chef-one
 docker run -ti --rm keithsharp/chef-two
 ```
 > **Note**
-> I've switched back to using `rust:slim-bookworm` to build and `debian:bookworm-slim`, this is to avoid having to complicate the [`Dockerfile`](https://github.com/keithsharp/cloud-native-rust/tree/main/workspace-cargo-chef/Dockerfile) with building and linking a static versions of OpenSSL which is a requirement of [Tokio](https://tokio.rs/).
+> I've switched back to using `rust:slim-bookworm` to build and `debian:bookworm-slim` to run, this is to avoid having to complicate the [`Dockerfile`](https://github.com/keithsharp/cloud-native-rust/tree/main/workspace-cargo-chef/Dockerfile) with building and linking a static versions of OpenSSL which is a requirement of [reqwest](https://docs.rs/reqwest/latest/reqwest/).
 
+## [Cargo Chef Scratch](https://github.com/keithsharp/cloud-native-rust/tree/main/cargo-chef-scratch)
+This workspace is an update to [Workspace Cargo Chef](https://github.com/keithsharp/cloud-native-rust/tree/main/workspace-cargo-chef) where the final containers are based on `Scratch` and are only 11.3Mb and 7.7Mb in size.  To make this work I changed the [`Cargo.toml`](https://github.com/keithsharp/cloud-native-rust/tree/main/cargo-chef-scratch/two/Cargo.toml) file for crate [`two`](https://github.com/keithsharp/cloud-native-rust/tree/main/cargo-chef-scratch/two) so that [Reqwest](https://docs.rs/reqwest/latest/reqwest/) now uses `rustls` rather than native TLS (usually OpenSSL).
+
+I then needed to add a couple of lines to the top of the [Dockerfile](https://github.com/keithsharp/cloud-native-rust/tree/main/cargo-chef-scratch/Dockerfile) to get cross-compilation from Debian to MUSL/Alpine working:
+```dockerfile
+RUN apt-get update && apt-get install -y musl-tools
+RUN rustup target add x86_64-unknown-linux-musl
+```
+With these lines in place I could add `--target=x86_64-unknown-linux-musl` to `cargo chef cook ...` and `cargo build ...`.  I think that you could also use `rust:alpine3.18` as the base build container, but you would need to use `RUN apk add musl-dev` to install the MUSL tools.
+
+Building and running remains the same as before:
+```bash
+cargo make build
+```
+To run the containers:
+```bash
+docker run -ti --rm keithsharp/chef-one
+docker run -ti --rm keithsharp/chef-two
+```
+ 
 # Copyright and License
 Copyright 2023, Keith Sharp, kms@passback.co.uk.
 

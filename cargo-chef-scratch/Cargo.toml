@@ -1,0 +1,6 @@
+[workspace]
+members = ["one", "two"]
+
+[workspace.dependencies]
+anyhow = "1.0.72"
+tokio = { version = "1", features = ["full"] }
